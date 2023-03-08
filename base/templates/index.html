@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CargoMonitor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <div class="row align-items-center">
+            <div class="col d-flex justify-content-end">
+                <label for="cargo_type_filter">Модель: </label>
+            </div>
+            <div class="col">
+                <select id="cargo_type_filter" name="cargo_type_filter" class="form-select">
+                <option></option>
+                    {% for option in select_option_list %}
+                        <option value="{{ option }}">{{ option }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col d-flex justify-content-start">
+                <button name="filter_button" id="filter_button" type="button" class="btn btn-secondary">Применить</button>
+            </div>
+        </div>
+
+    </div>
+    <table class="table table-striped mt-5">
+        <tr>
+            <th scope="col">Бортовой номер</th>
+            <th scope="col">Модель</th>
+            <th scope="col">Макс. груз</th>
+            <th scope="col">Текущий груз</th>
+            <th scope="col">Перегруз, %</th>
+        </tr>
+        {% for cargo in object_list %}
+            <tr>
+                <th scope="row">{{ cargo.bort_number }}</th>
+                <td>{{ cargo.model.model_name }}</td>
+                <td>{{ cargo.model.max_weight }}</td>
+                <td>{{ cargo.current_weight }}</td>
+                <td>{{ cargo.overweight }}</td>
+            </tr>
+
+        {% endfor %}
+    </table>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById("filter_button").addEventListener('click', function() {
+        let link = '{% url 'index' %}';
+        link = link + '?modelname=' + document.getElementById("cargo_type_filter").value;
+        console.log(link);
+        window.location.href = link;
+        });
+    </script>
+</body>
+</html>

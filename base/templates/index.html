@@ -16,7 +16,7 @@
                 <select id="cargo_type_filter" name="cargo_type_filter" class="form-select">
                 <option></option>
                     {% for option in select_option_list %}
-                        <option value="{{ option }}">{{ option }}</option>
+                        <option value="{{ option }}" {% if option == selected_option %} selected {% endif %}>{{ option }}</option>
                     {% endfor %}
                 </select>
             </div>
